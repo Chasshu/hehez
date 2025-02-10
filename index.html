@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+    /* Previous styles remain the same until stem-wrapper */
+    *,
+    *::after,
+    *::before {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-bg: linear-gradient(to top, #010329, #000005);
+      --ribbon-color: #ff1493;
+      --stem-color: #2d5a3c;
+    }
+
+    body {
+      background-image: var(--color-bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .bouquet {
+      position: absolute;
+      left: 50%;
+      top: 45%; /* Adjusted from 50% to move up slightly */
+      transform: translate(-50%, -60%); /* Adjusted Y translation for better vertical position */
+      animation: sway 6s ease-in-out infinite;
+      height: 80vh; /* Reduced from 90vh for better proportion */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .flower {
+      position: relative;
+    }
+
+    .flower-pp {
+      position: absolute;
+      transform-origin: bottom center;
+    }
+
+    .flower-pp--1 {
+      position: absolute;
+      left: 15%;
+      left: 0;
+      bottom: -1vmin;
+    }
+
+    .flower-pp--2 {
+      left: 8vmin;
+      bottom: -1vmin;
+      transform: rotate(15deg);
+    }
+
+    .flower-pp--3 {
+      left: -8vmin;
+      bottom: -1vmin;
+      transform: rotate(-20deg);
+    }
+
+    .flower-pp--4 {
+      left: 4vmin;
+      bottom: 0;
+      bottom: -1vmin;
+      transform: rotate(5deg);
+    }
+
+    .flower-pp--5 {
+      left: -4vmin;
+      bottom: -1vmin;
+      transform: rotate(-10deg);
+    }
+
+    .flower_l {
+      width: 2vmin;
+      height: 40vmin;
+      background-image: linear-gradient(to left top, var(--stem-color), #1e3928);
+      border-radius: 4vmin;
+      position: relative;
+    }
+
+    .f {
+      position: absolute;
+      top: 1vmin;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2vmin;
+      height: 2vmin;
+    }
+
+    .leaf {
+      position: absolute;
+      left: 50%;
+      bottom: 2vmin;
+      transform: translateX(-50%);
+      width: 5vmin;
+      height: 14vmin;
+      background-image: linear-gradient(to bottom, #ffa085, #fa7373, #1a233a 99%);
+      clip-path: ellipse(50% 50% at 50% 50%);
+      transform-origin: center bottom;
+      animation: open-flower 2s backwards;
+    }
+
+    .flower-pp--2 .leaf:not(:first-child) {
+      background-image: linear-gradient(to bottom, #ff43b6, #c22887, #1a233a 99%);
+    }
+
+    .flower-pp--3 .leaf:not(:first-child) {
+      background-image: linear-gradient(to bottom, #ad2be0, #712291, #1a233a 99%);
+    }
+
+    .flower-pp--4 .leaf:not(:first-child) {
+      background-image: linear-gradient(to bottom, #ffeb3b, #ffc107, #1a233a 99%);
+    }
+
+    .flower-pp--5 .leaf:not(:first-child) {
+      background-image: linear-gradient(to bottom, #ff5722, #ff9800, #1a233a 99%);
+    }
+
+    .leaf--1 {
+      width: 10vmin;
+      height: 12vmin;
+      bottom: 3vmin;
+      border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
+      background-color: #e24f5f;
+      animation: open-flower--middle 1.4s backwards;
+    }
+
+    .leaf--2 { transform: translateX(-50%) rotate(-30deg); }
+    .leaf--3 { transform: translateX(-50%) rotate(-50deg); }
+    .leaf--4 { transform: translateX(-50%) rotate(-70deg); }
+    .leaf--5 { transform: translateX(-50%) rotate(30deg); }
+    .leaf--6 { transform: translateX(-50%) rotate(50deg); }
+    .leaf--7 { transform: translateX(-50%) rotate(70deg); }
+
+    .leaf--8 {
+      width: 13vmin;
+      height: 11vmin;
+      bottom: 6vmin;
+      left: -30%;
+      border-radius: 10vmin 2vmin 10vmin 2vmin;
+      transform: rotate(-55deg);
+      background-image: linear-gradient(to left bottom, #ffa085, #eb8b8b, #492f2f 98%);
+    }
+
+    /* Updated stem wrapper */
+    .stem-wrapper {
+      position: absolute;
+      bottom: -30vmin;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12vmin;
+      height: 25vmin;
+      background: linear-gradient(to bottom, var(--stem-color), #1e3928);
+      border-radius: 4vmin;
+      transform-origin: center bottom;
+    }
+
+    .stem-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -5vmin;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16vmin;
+      height: 10vmin;
+      background: var(--stem-color);
+      border-radius: 4vmin 4vmin 0 0;
+    }
+
+    /* Updated ribbon */
+    .ribbon {
+      position: absolute;
+      bottom: -10vmin;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16vmin;
+      height: 12vmin;
+      z-index: 10;
+    }
+
+    .ribbon::before, .ribbon::after {
+      content: '';
+      position: absolute;
+      width: 10vmin;
+      height: 18vmin;
+      background: var(--ribbon-color);
+      border-radius: 4vmin;
+      box-shadow: 0 0.5vmin 1vmin rgba(0,0,0,0.2);
+    }
+
+    .ribbon::before {
+      left: -3vmin;
+      transform: rotate(-30deg);
+      animation: ribbonWave1 3s ease-in-out infinite;
+    }
+
+    .ribbon::after {
+      right: -3vmin;
+      transform: rotate(30deg);
+      animation: ribbonWave2 3s ease-in-out infinite;
+    }
+
+    .ribbon-center {
+      position: absolute;
+      width: 10vmin;
+      height: 10vmin;
+      background: var(--ribbon-color);
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 11;
+      box-shadow: 0 0.5vmin 1vmin rgba(0,0,0,0.2);
+    }
+    .proposal-text {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 5vmin;
+    font-family: 'Brush Script MT', cursive;
+    color: #ff6b6b;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    animation: float 3s ease-in-out infinite;
+}
+
+.proposal-text::before {
+    content: "Will you be my girlfriend?";
+}
+@keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+}
+    @keyframes sway {
+      0%, 100% { transform: translate(-50%, -60%) rotate(-15deg); }
+      50% { transform: translate(-50%, -60%) rotate(-12deg); }
+    }
+
+    @keyframes ribbonWave1 {
+      0%, 100% { transform: rotate(-30deg); }
+      50% { transform: rotate(-35deg); }
+    }
+
+    @keyframes ribbonWave2 {
+      0%, 100% { transform: rotate(30deg); }
+      50% { transform: rotate(35deg); }
+    }
+
+    @keyframes open-flower {
+      0% { transform: translateX(-50%) rotate(0); }
+    }
+
+    @keyframes open-flower--middle {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0);
+      }
+    }
+    </style>
+</head>
+<body>
+  <div class="proposal-text"></div>
+    <div class="bouquet">
+        <div class="flower-pp flower-pp--1">
+            <div class="flower_l"></div>
+            <div class="f">
+                <div class="leaf leaf--1"></div>
+                <div class="leaf leaf--2"></div>
+                <div class="leaf leaf--3"></div>
+                <div class="leaf leaf--4"></div>
+                <div class="leaf leaf--5"></div>
+                <div class="leaf leaf--6"></div>
+                <div class="leaf leaf--7"></div>
+            </div>
+        </div>
+        <div class="flower-pp flower-pp--2">
+            <div class="flower_l"></div>
+            <div class="f">
+                <div class="leaf leaf--1"></div>
+                <div class="leaf leaf--2"></div>
+                <div class="leaf leaf--3"></div>
+                <div class="leaf leaf--4"></div>
+                <div class="leaf leaf--5"></div>
+                <div class="leaf leaf--6"></div>
+                <div class="leaf leaf--7"></div>
+            </div>
+        </div>
+        <div class="flower-pp flower-pp--3">
+            <div class="flower_l"></div>
+            <div class="f">
+                <div class="leaf leaf--1"></div>
+                <div class="leaf leaf--2"></div>
+                <div class="leaf leaf--3"></div>
+                <div class="leaf leaf--4"></div>
+                <div class="leaf leaf--5"></div>
+                <div class="leaf leaf--6"></div>
+                <div class="leaf leaf--7"></div>
+            </div>
+        </div>
+        <div class="flower-pp flower-pp--4">
+            <div class="flower_l"></div>
+            <div class="f">
+                <div class="leaf leaf--1"></div>
+                <div class="leaf leaf--2"></div>
+                <div class="leaf leaf--3"></div>
+                <div class="leaf leaf--4"></div>
+                <div class="leaf leaf--5"></div>
+                <div class="leaf leaf--6"></div>
+                <div class="leaf leaf--7"></div>
+            </div>
+        </div>
+        <div class="flower-pp flower-pp--5">
+            <div class="flower_l"></div>
+            <div class="f">
+                <div class="leaf leaf--1"></div>
+                <div class="leaf leaf--2"></div>
+                <div class="leaf leaf--3"></div>
+                <div class="leaf leaf--4"></div>
+                <div class="leaf leaf--5"></div>
+                <div class="leaf leaf--6"></div>
+                <div class="leaf leaf--7"></div>
+            </div>
+        </div>
+        <div class="stem-wrapper"></div>
+        <div class="ribbon">
+            <div class="ribbon-center"></div>
+        </div>
+    </div>
+</body>
+</html>
